@@ -58,3 +58,4 @@ jobs:
         github-generate-changelog: true # optional, default is ${undefined}
     # Set to true to create a draft release; false otherwise. Ignored if the GitHub Release already exists.
         github-draft: true # optional, default is ${undefined}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
