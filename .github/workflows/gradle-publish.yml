@@ -38,11 +38,7 @@ jobs:
     - name: Build with Gradle
       run: gradle build
       
-    - name: Release
+    - name: Release user files
       uses: softprops/action-gh-release@v2
-        
-        
-
-
-
-          
+      with:
+        tag_name: AutoBuild
