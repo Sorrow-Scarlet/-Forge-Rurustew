@@ -1,3 +1,6 @@
 {
-  "item.rurustew.Iron_Knife": "铁刀"
+  "item.Group.rurustew_tab/group": "炖露露",
+  "item.rurustew.rawPlayerMeat": "生人肉",
+  "item.rurustew.cookedPlayerMeat": "熟人肉",
+  "item.rurustew.knife": "刀"
 }
