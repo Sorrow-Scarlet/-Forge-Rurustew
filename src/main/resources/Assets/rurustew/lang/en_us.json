@@ -1,3 +1,6 @@
 {
-  "item.rurustew.Iron_Knife": "Iron Knife"
+  "item.Group.rurustew_tab/group": "Ruru Stew",
+  "item.rurustew.rawPlayerMeat": "Raw Player Meat",
+  "item.rurustew.cookedPlayerMeat": "Cooked Player Meat",
+  "item.rurustew.knife": "Knife"
 }

@@ -1,9 +1,13 @@
 package SorrowIDT.rurustew;
 
-import SorrowIDT.rurustew.item.ModItems;
+
+import SorrowIDT.rurustew.item.knife;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,8 +20,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+
+import static java.util.logging.Level.CONFIG;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Rurustew.MODID)
@@ -27,20 +36,25 @@ public class Rurustew {
     public static final String MODID = "rurustew";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-
-
+    public static final DeferredRegister<Item> ITEMS= DeferredRegister.create(ForgeRegistries.ITEMS,
+            Rurustew.MODID);
+    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB,
+            Rurustew.MODID);
     //注册物品
+    public static final RegistryObject<Item> rawPlayerMeat =ITEMS.register("rawplayermeat",
+            ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> cookedPlayerMeat =ITEMS.register("cookedplayermeat",
+            ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> knife =ITEMS.register("knife",
+            ()->new knife(new Item.Properties()));
 
     public Rurustew() {
-        IEventBus modEventBus = MinecraftForge.EVENT_BUS;
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();//MinecraftForge.EVENT_BUS,fuck you;
 
+        ITEMS.register(modEventBus);
+        TABS.register(modEventBus);
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-
-        //在这里注册物品和物品栏
-        ModItems.register(modEventBus);
-
-
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         // Register the item to a creative tab
@@ -62,12 +76,13 @@ public class Rurustew {
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
-    // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS)
-            ;
-
+        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            event.accept(knife);
+            event.accept(rawPlayerMeat);
+            event.accept(cookedPlayerMeat);
+        }
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
