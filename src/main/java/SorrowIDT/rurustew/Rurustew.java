@@ -92,13 +92,7 @@ public class Rurustew {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-/*
-        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-            event.accept(knife);
-            event.accept(rawPlayerMeat);
-            event.accept(cookedPlayerMeat);
-        }
-*/
+
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
